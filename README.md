@@ -1,7 +1,6 @@
 # HRNet React Application
 
-This project is a conversion of the original HRNet application, designed to manage employee records for WealthHealth. This updated version replaces jQuery with React components to enhance performance, maintainability, and user experience.
-[Original Version with JQuery](https://github.com/OpenClassrooms-Student-Center/P12_Front-end)
+This project is a conversion of the [original HRNet application](https://github.com/OpenClassrooms-Student-Center/P12_Front-end), designed to manage employee records for WealthHealth. This updated version replaces jQuery with React components to enhance performance, maintainability, and user experience.
 
 ## Features
 
