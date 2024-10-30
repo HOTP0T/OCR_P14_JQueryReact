@@ -1,11 +1,12 @@
-// src/components/EmployeeList.js
 import React, { useMemo } from 'react';
 import { useTable } from 'react-table';
-import { useEmployeeContext } from '../EmployeeContext'; // Importer le contexte
+import { useEmployeeContext } from '../EmployeeContext'; // Import context to access employee list
 
 const EmployeeList = () => {
-  const { employees } = useEmployeeContext(); // Récupérer les employés du contexte
+  // Retrieve employees from global context
+  const { employees } = useEmployeeContext();
 
+  // Define table columns for employee data
   const columns = useMemo(
     () => [
       { Header: 'First Name', accessor: 'firstName' },
@@ -18,12 +19,13 @@ const EmployeeList = () => {
       { Header: 'State', accessor: 'state' },
       { Header: 'Zip Code', accessor: 'zipCode' },
     ],
-    []
+    [] // Only runs once since column configuration is static
   );
 
+  // Use react-table to manage table structure and data
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
     columns,
-    data: employees, // Utiliser les employés du contexte
+    data: employees, // Table data from context
   });
 
   return (
@@ -52,7 +54,7 @@ const EmployeeList = () => {
           })}
         </tbody>
       </table>
-      <a href="/">Home</a>
+      <a href="/">Home</a> {/* Link to navigate back to home */}
     </div>
   );
 };

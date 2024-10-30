@@ -71,7 +71,10 @@ const states = [
 ];
 
 const EmployeeForm = () => {
-  const { addEmployee } = useEmployeeContext(); // Utiliser addEmployee
+  // Import the addEmployee function from context to update global employee state
+  const { addEmployee } = useEmployeeContext();
+
+  // Local state for each form field
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState(null);
@@ -81,8 +84,9 @@ const EmployeeForm = () => {
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [zipCode, setZipCode] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // Controls the modal display
 
+  // Function to handle form submission, add employee, and open confirmation modal
   const saveEmployee = () => {
     const newEmployee = {
       firstName,
@@ -95,8 +99,8 @@ const EmployeeForm = () => {
       state,
       zipCode,
     };
-    addEmployee(newEmployee); // Ajouter l’employé via le contexte
-    setIsModalOpen(true);
+    addEmployee(newEmployee); // Add employee to global state
+    setIsModalOpen(true); // Display confirmation modal
   };
 
   return (
