@@ -27,20 +27,20 @@ This project is a conversion of the [original HRNet application](https://github.
 ### Installation
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/HOTP0T/OCR_P14_JQueryReact
-   cd OCR_P14_JQueryReact
-   ```
+    ```bash
+    git clone https://github.com/HOTP0T/OCR_P14_JQueryReact
+    cd OCR_P14_JQueryReact
+    ```
 
 2. Install dependencies:
-```bash
-npm install
-```
+    ```bash
+    npm install
+    ```
 
 13. Install dependencies:
-```bash
-npm start
-```
+    ```bash
+    npm start
+    ```
 
 ### Usage
 
