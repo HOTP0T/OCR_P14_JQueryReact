@@ -94,4 +94,4 @@ Ce composant principal gère la navigation de l'application.
 
 ## Palette de couleurs
 
-<img src="public/images/colorpalette.png" alt="Palette de Couleurs" style="width: 200px; height: auto;">
+<img src="public/images/colorpalette.png" alt="Palette de Couleurs" style="width: 550px; height: 300px;">
