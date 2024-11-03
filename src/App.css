@@ -1,148 +1,169 @@
-/* Title styling */
+/* General Layout */
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #F2F2F2;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
 .title {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 2rem;
   font-size: 2rem;
-  font-weight: bold;
-  color: #333;
+  margin: 2rem 0;
 }
 
-/* Container styling */
+.title img {
+  height: 50px;
+  margin-right: 10px;
+}
+
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 1rem;
-  background-color: #f9f9f9;
-  border-radius: 10px;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 1200px;
+  margin: 2rem auto;
 }
 
-/* Label styling */
+nav {
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav a {
+  margin: 0 1rem;
+  text-decoration: none;
+  color: #667309;
+  font-weight: bold;
+}
+
+nav a:hover {
+  color: #7E8C11;
+}
+
+/* Form Styling */
+form {
+  width: 100%;
+}
+
 label {
-  display: block;
+  font-weight: bold;
   margin-top: 1rem;
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
-  font-weight: 500;
   color: #555;
 }
 
-/* Input and select field styling */
-input, select, .react-datepicker-wrapper input {
+input, select, button {
   width: 100%;
-  max-width: 400px; /* Set a max-width for better alignment */
-  padding: 0.5rem;
-  margin-bottom: 1rem;
+  padding: 12px;
+  margin-top: 5px;
+  margin-bottom: 15px;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 6px;
   font-size: 1rem;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-  transition: border-color 0.3s;
+  box-sizing: border-box;
 }
 
-/* General styling for all input and select fields */
-input:focus, select:focus, .react-datepicker-wrapper input:focus {
-  border-color: #007bff;
-  outline: none;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-}
-
-/* Address section styling */
-.address {
-  margin-top: 1.5rem;
-  padding: 1rem 1.5rem; /* Add padding for space between fields and border */
-  border: 1px solid #eee;
-  border-radius: 8px;
-  background-color: #ffffff;
-  width: 100%;
-  max-width: 400px;
-}
-
-/* Input fields within Address section */
-.address input, .address select {
-  width: 90%; /* Slightly narrower to avoid touching the border */
-  max-width: 360px;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 1rem;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-/* Basic styling for the modal overlay and content */
-.ReactModal__Overlay {
-  background-color: rgba(0, 0, 0, 0.75);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.ReactModal__Content {
-  width: 400px;
-  max-width: 90%;
-  padding: 1.5rem;
-  border-radius: 10px;
-  background-color: #fff;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-  position: relative;
-  text-align: center;
-}
-
-/* Close button styling */
-.modal-close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 1.2rem;
-  color: #333;
-  cursor: pointer;
-  background: none;
-  border: none;
-}
-
-/* Modal content text */
-.modal-content p {
-  font-size: 1rem;
-  color: #333;
-  margin-bottom: 1.5rem;
-}
-
-/* Modal button styling */
-.modal-content button {
-  padding: 0.5rem 1.5rem;
-  font-size: 1rem;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.modal-content button:hover {
-  background-color: #0056b3;
-}
-
-/* Main button styling */
 button {
-  padding: 0.6rem 1.2rem;
-  font-size: 1rem;
+  background-color: #667309;
   color: #fff;
-  background-color: #007bff;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
-  margin-top: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #7E8C11;
+}
+
+/* Address Fieldset */
+fieldset.address {
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+legend {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #667309;
+}
+
+/* Modal */
+.ReactModal__Overlay {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.ReactModal__Content {
+  border: none;
+  border-radius: 8px;
+  padding: 1rem;
+  max-width: 400px;
+  margin: auto;
+  text-align: center;
+  max-height: 150px;
+}
+
+.ReactModal__Content h2 {
+  margin-bottom: 1rem;
+  color: #667309;
+}
+
+.ReactModal__Content button {
+  background-color: #667309;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.ReactModal__Content button:hover {
+  background-color: #7E8C11;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+thead {
+  background-color: #667309;
+  color: #fff;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+  background-color: #e0e0e0;
 }

@@ -1,0 +1,16 @@
+{
+  "employees": [
+    {
+      "id": "ddb9",
+      "firstName": "Maximilien",
+      "lastName": "FRZ",
+      "dateOfBirth": "2024-10-30",
+      "startDate": "2024-10-31",
+      "department": "Marketing",
+      "street": "123123",
+      "city": "12312",
+      "state": "AZ",
+      "zipCode": "45678"
+    }
+  ]
+}

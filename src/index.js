@@ -1,15 +1,11 @@
-// src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
-import { EmployeeProvider } from './EmployeeContext'; // Importer le provider
+import './App.css'; // Import your CSS
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <EmployeeProvider>
-      <App />
-    </EmployeeProvider>
+    <App />
   </React.StrictMode>
 );

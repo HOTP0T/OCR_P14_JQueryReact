@@ -1,23 +1,34 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
+import axios from 'axios';
 
-// Create a context to hold employee data across the application
-const EmployeeContext = createContext();
+export const EmployeeContext = createContext();
 
-// Custom hook to access the EmployeeContext data more easily
-export const useEmployeeContext = () => useContext(EmployeeContext);
-
-// Provider component to wrap around parts of the app that need access to employee data
 export const EmployeeProvider = ({ children }) => {
-  // State to store the list of employees
   const [employees, setEmployees] = useState([]);
 
-  // Function to add a new employee to the employee state
-  const addEmployee = (employee) => {
-    setEmployees((prevEmployees) => [...prevEmployees, employee]);
+  // Fetch employees from json-server on component mount
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/employees');
+        setEmployees(response.data);
+      } catch (error) {
+        console.error("Error fetching employees:", error);
+      }
+    };
+    fetchEmployees();
+  }, []);
+
+  const addEmployee = async (employee) => {
+    try {
+      const response = await axios.post('http://localhost:3001/employees', employee);
+      setEmployees((prevEmployees) => [...prevEmployees, response.data]);
+    } catch (error) {
+      console.error("Error adding employee:", error);
+    }
   };
 
   return (
-    // Provide the employee list and addEmployee function to child components
     <EmployeeContext.Provider value={{ employees, addEmployee }}>
       {children}
     </EmployeeContext.Provider>
