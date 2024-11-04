@@ -1,80 +1,81 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useMemo } from 'react';
+import { useTable, useSortBy, useGlobalFilter } from 'react-table';
 import { EmployeeContext } from '../EmployeeContext';
 
 function EmployeeList() {
   const { employees } = useContext(EmployeeContext);
 
-  // State for sorting configuration with three states: ascending, descending, and default
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'default' });
+  // Define columns for react-table
+  const columns = useMemo(() => [
+    { Header: 'First Name', accessor: 'firstName' },
+    { Header: 'Last Name', accessor: 'lastName' },
+    { Header: 'Start Date', accessor: 'startDate' },
+    { Header: 'Department', accessor: 'department' },
+    { Header: 'Date of Birth', accessor: 'dateOfBirth' },
+    { Header: 'Street', accessor: 'street' },
+    { Header: 'City', accessor: 'city' },
+    { Header: 'State', accessor: 'state' },
+    { Header: 'Zip Code', accessor: 'zipCode' },
+  ], []);
 
-  // Sorting function with default option to reset sorting
-  const sortedEmployees = [...employees].sort((a, b) => {
-    if (sortConfig.direction === 'default' || sortConfig.key === null) return 0; // No sorting if direction is default or key is null
+  // Define data for react-table
+  const data = useMemo(() => employees, [employees]);
 
-    let valueA = a[sortConfig.key];
-    let valueB = b[sortConfig.key];
-
-    // Parse dates for sorting if key is date-related
-    if (sortConfig.key === 'dateOfBirth' || sortConfig.key === 'startDate') {
-      valueA = new Date(valueA);
-      valueB = new Date(valueB);
-    }
-
-    // Sorting logic based on direction
-    if (valueA < valueB) return sortConfig.direction === 'ascending' ? -1 : 1;
-    if (valueA > valueB) return sortConfig.direction === 'ascending' ? 1 : -1;
-    return 0;
-  });
-
-  // Handler to cycle sorting states
-  const handleSort = (key) => {
-    setSortConfig((prevConfig) => {
-      let direction;
-      if (prevConfig.key === key) {
-        // Cycle through directions: ascending -> descending -> default
-        direction = prevConfig.direction === 'ascending' ? 'descending' 
-                  : prevConfig.direction === 'descending' ? 'default' 
-                  : 'ascending';
-      } else {
-        // Default to ascending if sorting a new column
-        direction = 'ascending';
-      }
-      return { key, direction };
-    });
-  };
+  // Initialize the table instance
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    setGlobalFilter,
+  } = useTable(
+    { columns, data },
+    useGlobalFilter, // For global filtering
+    useSortBy // For sorting
+  );
 
   return (
     <div className="container">
       <h2>Current Employees</h2>
+      
+      {/* Global Filter Input */}
+      <input
+        type="text"
+        placeholder="Search..."
+        onChange={(e) => setGlobalFilter(e.target.value || undefined)}
+        style={{ marginBottom: '10px', padding: '5px', width: '100%' }}
+      />
 
-      <table>
+      <table {...getTableProps()}>
         <thead>
-          <tr>
-            <th onClick={() => handleSort('firstName')}>First Name {sortConfig.key === 'firstName' ? (sortConfig.direction === 'ascending' ? '▲' : sortConfig.direction === 'descending' ? '▼' : '') : ''}</th>
-            <th onClick={() => handleSort('lastName')}>Last Name {sortConfig.key === 'lastName' ? (sortConfig.direction === 'ascending' ? '▲' : sortConfig.direction === 'descending' ? '▼' : '') : ''}</th>
-            <th onClick={() => handleSort('startDate')}>Start Date {sortConfig.key === 'startDate' ? (sortConfig.direction === 'ascending' ? '▲' : sortConfig.direction === 'descending' ? '▼' : '') : ''}</th>
-            <th onClick={() => handleSort('department')}>Department {sortConfig.key === 'department' ? (sortConfig.direction === 'ascending' ? '▲' : sortConfig.direction === 'descending' ? '▼' : '') : ''}</th>
-            <th onClick={() => handleSort('dateOfBirth')}>Date of Birth {sortConfig.key === 'dateOfBirth' ? (sortConfig.direction === 'ascending' ? '▲' : sortConfig.direction === 'descending' ? '▼' : '') : ''}</th>
-            <th onClick={() => handleSort('street')}>Street {sortConfig.key === 'street' ? (sortConfig.direction === 'ascending' ? '▲' : sortConfig.direction === 'descending' ? '▼' : '') : ''}</th>
-            <th onClick={() => handleSort('city')}>City {sortConfig.key === 'city' ? (sortConfig.direction === 'ascending' ? '▲' : sortConfig.direction === 'descending' ? '▼' : '') : ''}</th>
-            <th onClick={() => handleSort('state')}>State {sortConfig.key === 'state' ? (sortConfig.direction === 'ascending' ? '▲' : sortConfig.direction === 'descending' ? '▼' : '') : ''}</th>
-            <th onClick={() => handleSort('zipCode')}>Zip Code {sortConfig.key === 'zipCode' ? (sortConfig.direction === 'ascending' ? '▲' : sortConfig.direction === 'descending' ? '▼' : '') : ''}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedEmployees.map((employee, index) => (
-            <tr key={index}>
-              <td>{employee.firstName}</td>
-              <td>{employee.lastName}</td>
-              <td>{employee.startDate}</td>
-              <td>{employee.department}</td>
-              <td>{employee.dateOfBirth}</td>
-              <td>{employee.street}</td>
-              <td>{employee.city}</td>
-              <td>{employee.state}</td>
-              <td>{employee.zipCode}</td>
+          {headerGroups.map(headerGroup => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map(column => (
+                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  {column.render('Header')}
+                  {/* Add a sort direction indicator */}
+                  {column.isSorted
+                    ? column.isSortedDesc
+                      ? ' ▼'
+                      : ' ▲'
+                    : ''}
+                </th>
+              ))}
             </tr>
           ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map(row => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map(cell => (
+                  <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                ))}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

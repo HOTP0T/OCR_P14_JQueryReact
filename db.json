@@ -47,6 +47,18 @@
       "city": "City",
       "state": "AS",
       "zipCode": "123"
+    },
+    {
+      "id": "6f17",
+      "firstName": "test react table",
+      "lastName": "test react table",
+      "dateOfBirth": "2024-10-31",
+      "startDate": "2024-11-01",
+      "department": "Engineering",
+      "street": "12",
+      "city": "",
+      "state": "",
+      "zipCode": ""
     }
   ]
 }
