@@ -1,25 +1,28 @@
 import React, { useContext, useState } from 'react';
 import Modal from 'react-modal';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { EmployeeContext } from '../EmployeeContext';
 import Dropdown from '@hotp0t/dropdown-package';
 
-Modal.setAppElement('#root');
+Modal.setAppElement('#root'); // Setting root element for accessibility with Modal
 
 function CreateEmployee() {
-  const { addEmployee } = useContext(EmployeeContext);
+  const { addEmployee } = useContext(EmployeeContext); // Accessing addEmployee function from context
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    dateOfBirth: '',
-    startDate: '',
+    dateOfBirth: null,
+    startDate: null,
     department: '',
     street: '',
     city: '',
     state: '',
     zipCode: '',
-  });
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  }); // State to manage form inputs
+  const [modalIsOpen, setModalIsOpen] = useState(false); // State to manage modal visibility
 
+  // List of departments for the dropdown menu
   const departments = [
     { label: "Sales", value: "Sales" },
     { label: "Marketing", value: "Marketing" },
@@ -28,6 +31,7 @@ function CreateEmployee() {
     { label: "Legal", value: "Legal" }
   ];
 
+  // List of US states for the dropdown menu
   const states = [
     { value: 'DT', label: 'DevTest' },
     { value: "AL", label: "Alabama" },
@@ -91,18 +95,28 @@ function CreateEmployee() {
     { value: "WY", label: "Wyoming" }
   ];
 
+  // Handles generic input changes for text fields
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
+  // Handles selection in the department dropdown
   const handleSelectDepartment = (selectedValue) => {
     setFormData({ ...formData, department: selectedValue });
   };
 
+  // Handles date selection and formats it to exclude time
+  const handleDateChange = (date, field) => {
+    const formattedDate = date.toISOString().split('T')[0]; // Format date to 'YYYY-MM-DD'
+    setFormData({ ...formData, [field]: formattedDate });
+  };
+
+  // Handles selection in the state dropdown
   const handleSelectState = (selectedValue) => {
     setFormData({ ...formData, state: selectedValue });
   };
 
+  // Submits form data and triggers modal confirmation
   const handleSubmit = (e) => {
     e.preventDefault();
     addEmployee(formData);
@@ -119,12 +133,29 @@ function CreateEmployee() {
         <label htmlFor="lastName">Last Name</label>
         <input type="text" id="lastName" value={formData.lastName} onChange={handleChange} />
 
+        {/* Date of Birth with React DatePicker */}
         <label htmlFor="dateOfBirth">Date of Birth</label>
-        <input type="date" id="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} />
+        <br />
+        <DatePicker
+          selected={formData.dateOfBirth ? new Date(formData.dateOfBirth) : null}
+          onChange={(date) => handleDateChange(date, 'dateOfBirth')}
+          dateFormat="dd/MM/yyyy"
+          placeholderText="Select date of birth"
+        />
 
+        {/* Start Date with React DatePicker */}
+        <br />
         <label htmlFor="startDate">Start Date</label>
-        <input type="date" id="startDate" value={formData.startDate} onChange={handleChange} />
+        <br />
+        <DatePicker
+          selected={formData.startDate ? new Date(formData.startDate) : null}
+          onChange={(date) => handleDateChange(date, 'startDate')}
+          dateFormat="dd/MM/yyyy"
+          placeholderText="Select start date"
+        />
 
+        {/* Department Dropdown */}
+        <br />
         <label htmlFor="department">Department</label>
         <Dropdown
           options={departments}
@@ -133,6 +164,7 @@ function CreateEmployee() {
           placeholder="Select a department"
         />
 
+        {/* Address Section */}
         <fieldset className="address">
           <legend>Address</legend>
 
@@ -157,6 +189,7 @@ function CreateEmployee() {
         <button type="submit">Save</button>
       </form>
 
+      {/* Confirmation Modal */}
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
