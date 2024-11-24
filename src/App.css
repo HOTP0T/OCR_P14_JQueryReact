@@ -167,3 +167,18 @@ tbody tr:nth-child(even) {
 tbody tr:hover {
   background-color: #e0e0e0;
 }
+
+.pagination-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 1rem;
+}
+
+.table-page-count {
+  width: 250px;
+  margin-bottom: 15px;
+}
